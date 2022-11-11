@@ -17,17 +17,22 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // })->name('home');
 Route::view('/', 'welcome')->name('home');
+
 Route::get('/test', function () {
     return view('test');
 })->name('test');
+
 Route::get('/blog', function () {
     return view('blog');
 })->name('blog');
+
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('/users', function () {
-        return 'All Users';
-    })->name('users.index');
-    Route::get('/user/{id?}', function ($id = null) {
-        return 'User '.$id;
-    })->name('users.show')->whereNumber('id');
+    // Route::get('/users', function () {
+    //     return 'All Users';
+    // })->name('users.index');
+    // Route::get('/user/{id?}', function ($id = null) {
+    //     return 'User '.$id;
+    // })->name('users.show')->whereNumber('id');
+    Route::get('/user', [UserController::class, 'index'])->name('users.index');
+    Route::get('/user/{id?}', [UserController::class, 'show'])->name('users.show');
 });
